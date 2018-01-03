@@ -8,9 +8,9 @@ import (
 )
 
 func main() {
-	username := os.Args[0]
-	password := os.Args[1]
-	gid := os.Args[2]
+	username := os.Args[1]
+	password := os.Args[2]
+	gid := os.Args[3]
 	client := mongodb.New(username, password)
 	clusters, resp, err := client.Cluster.List(gid)
 	fmt.Println(clusters)
