@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/akshaykarle/mongodb-atlas-go/mongodb"
@@ -13,7 +14,11 @@ func main() {
 	gid := os.Args[3]
 	client := mongodb.New(username, password)
 	clusters, resp, err := client.Cluster.List(gid)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		log.Fatal(resp)
+	}
 	fmt.Println(clusters)
-	fmt.Println(resp)
-	fmt.Println(err)
 }
