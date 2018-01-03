@@ -39,3 +39,18 @@ func TestClusterService_Get(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)
 }
+
+func TestClusterService_Delete(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/api/atlas/v1.0/groups/123/clusters/test", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "DELETE", r)
+		fmt.Fprintf(w, `{}`)
+	})
+
+	client := NewClient(httpClient)
+	resp, err := client.Cluster.Delete("123", "test")
+	assert.Nil(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+}

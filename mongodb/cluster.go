@@ -57,3 +57,11 @@ func (c *ClusterService) Get(gid string, name string) (*Cluster, *http.Response,
 	resp, err := c.sling.New().Get(path).Receive(cluster, apiError)
 	return cluster, resp, relevantError(err, *apiError)
 }
+
+func (c *ClusterService) Delete(gid string, name string) (*http.Response, error) {
+	cluster := new(Cluster)
+	apiError := new(APIError)
+	path := fmt.Sprintf("%s/clusters/%s", gid, name)
+	resp, err := c.sling.New().Delete(path).Receive(cluster, apiError)
+	return resp, relevantError(err, *apiError)
+}
