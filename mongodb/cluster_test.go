@@ -14,7 +14,7 @@ func TestClusterService_List(t *testing.T) {
 
 	mux.HandleFunc("/api/atlas/v1.0/groups/123/clusters", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
-		fmt.Fprintf(w, `[{"name":"test","mongoDBMajorVersion":"3.4.9"}]`)
+		fmt.Fprintf(w, `{"links":[],"results":[{"name":"test","mongoDBMajorVersion":"3.4.9"}],"totalCount":1}`)
 	})
 
 	client := NewClient(httpClient)
