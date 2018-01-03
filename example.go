@@ -17,6 +17,8 @@ func main() {
 	t := dac.NewTransport(username, password)
 	httpClient := &http.Client{Transport: &t}
 	client := mongodb.NewClient(httpClient)
+
+	// Cluster.List example
 	clusters, resp, err := client.Cluster.List(gid)
 	if err != nil {
 		log.Fatal(err)
@@ -25,4 +27,14 @@ func main() {
 		log.Fatal(resp)
 	}
 	fmt.Println(clusters)
+
+	// Cluster.Get example
+	cluster, resp, err := client.Cluster.Get(gid, clusters[0].Name)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		log.Fatal(resp)
+	}
+	fmt.Println(cluster)
 }

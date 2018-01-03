@@ -37,15 +37,23 @@ type Cluster struct {
 	ProviderSettings    ProviderSettings `json:"providerSettings"`
 }
 
-type ClusterResponse struct {
+type listResponse struct {
 	Results    []Cluster `json:"results"`
 	TotalCount int       `json:"totalCount"`
 }
 
 func (c *ClusterService) List(gid string) ([]Cluster, *http.Response, error) {
-	response := new(ClusterResponse)
+	response := new(listResponse)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/clusters", gid)
 	resp, err := c.sling.New().Get(path).Receive(response, apiError)
 	return response.Results, resp, relevantError(err, *apiError)
+}
+
+func (c *ClusterService) Get(gid string, name string) (*Cluster, *http.Response, error) {
+	cluster := new(Cluster)
+	apiError := new(APIError)
+	path := fmt.Sprintf("%s/clusters/%s", gid, name)
+	resp, err := c.sling.New().Get(path).Receive(cluster, apiError)
+	return cluster, resp, relevantError(err, *apiError)
 }
