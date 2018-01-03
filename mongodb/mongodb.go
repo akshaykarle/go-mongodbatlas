@@ -14,7 +14,7 @@ type Client struct {
 	Cluster *ClusterService
 }
 
-func New(username string, password string) *Client {
+func NewClient(username string, password string) *Client {
 	t := dac.NewTransport(username, password)
 	httpClient := &http.Client{Transport: &t}
 	base := sling.New().Client(httpClient).Base(apiURL)
