@@ -1,7 +1,10 @@
 package mongodb
 
 import (
+	"net/http"
+
 	"github.com/dghubble/sling"
+	dac "github.com/xinsnake/go-http-digest-auth-client"
 )
 
 const apiURL = "https://cloud.mongodb.com/api/atlas/v1.0/"
@@ -11,8 +14,10 @@ type Client struct {
 	Cluster *ClusterService
 }
 
-func New(username string, token string) *Client {
-	base := sling.New().Base(apiURL).SetBasicAuth(username, token)
+func New(username string, password string) *Client {
+	t := dac.NewTransport(username, password)
+	httpClient := &http.Client{Transport: &t}
+	base := sling.New().Client(httpClient).Base(apiURL)
 	return &Client{
 		sling:   base,
 		Cluster: newClusterService(base.New()),
