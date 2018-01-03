@@ -18,10 +18,10 @@ func newClusterService(sling *sling.Sling) *ClusterService {
 }
 
 type ProviderSettings struct {
-	providerName        string `json:"providerName"`
-	backingProviderName string `json:"backingProviderName"`
-	regionName          string `json:"regionName"`
-	instanceSizeName    string `json:"instanceSizeName"`
+	ProviderName        string `json:"providerName"`
+	BackingProviderName string `json:"backingProviderName"`
+	RegionName          string `json:"regionName"`
+	InstanceSizeName    string `json:"instanceSizeName"`
 }
 
 type Cluster struct {
