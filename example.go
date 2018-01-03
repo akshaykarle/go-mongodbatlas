@@ -12,6 +12,8 @@ func main() {
 	password := os.Args[1]
 	gid := os.Args[2]
 	client := mongodb.New(username, password)
-	clusters := client.Cluster.List(gid)
+	clusters, resp, err := client.Cluster.List(gid)
 	fmt.Println(clusters)
+	fmt.Println(resp)
+	fmt.Println(err)
 }
