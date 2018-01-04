@@ -1,6 +1,7 @@
 language: go
 install:
   - go get github.com/golang/lint/golint
+  - go get github.com/xinsnake/go-http-digest-auth-client
   - go get -v -t ./mongodb
 script:
   - ./test.sh
