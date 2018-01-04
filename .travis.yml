@@ -1,0 +1,6 @@
+language: go
+install:
+  - go get github.com/golang/lint/golint
+  - go get -v -t ./mongodb
+script:
+  - ./test.sh
