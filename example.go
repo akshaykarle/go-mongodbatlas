@@ -19,56 +19,41 @@ func main() {
 	client := mongodb.NewClient(httpClient)
 
 	// Cluster.List example
-	clusters, resp, err := client.Cluster.List(gid)
+	clusters, _, err := client.Cluster.List(gid)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if resp.StatusCode != 200 {
-		log.Fatal(resp)
-	}
-	fmt.Println(clusters)
+	fmt.Printf("Clusters list: %v\n", clusters)
 
 	// Cluster.Get example
-	cluster, resp, err := client.Cluster.Get(gid, clusters[0].Name)
+	cluster, _, err := client.Cluster.Get(gid, clusters[0].Name)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if resp.StatusCode != 200 {
-		log.Fatal(resp)
-	}
-	fmt.Println(cluster)
+	fmt.Printf("Cluster get: %v\n", cluster)
 
 	// Cluster.Create example
-	providerSettings := mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
-	params := &mongodb.Cluster{Name: "test", MongoDBMajorVersion: "3.4", ReplicationFactor: 3, DiskSizeGB: 0.5, ProviderSettings: providerSettings}
-	cluster, resp, err = client.Cluster.Create(gid, params)
+	providerSettings := mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
+	params := &mongodb.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 0.5, BackupEnabled: false, ProviderSettings: providerSettings}
+	cluster, _, err = client.Cluster.Create(gid, params)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if resp.StatusCode != 200 {
-		log.Fatal(resp)
-	}
-	fmt.Println(cluster)
+	fmt.Printf("Cluster created: %v\n", cluster)
 
 	// Cluster.Update example
-	providerSettings = mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
-	params = &mongodb.Cluster{Name: "test", MongoDBMajorVersion: "3.4", ReplicationFactor: 3, DiskSizeGB: 5, ProviderSettings: providerSettings}
-	cluster, resp, err = client.Cluster.Create(gid, params)
+	providerSettings = mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
+	params = &mongodb.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 5, BackupEnabled: false, ProviderSettings: providerSettings}
+	cluster, _, err = client.Cluster.Create(gid, params)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if resp.StatusCode != 200 {
-		log.Fatal(resp)
-	}
-	fmt.Println(cluster)
+	fmt.Printf("Cluster updated: %v\n", cluster)
 
 	// Cluster.Delete example
-	resp, err = client.Cluster.Delete(gid, "test")
+	_, err = client.Cluster.Delete(gid, "test")
 	if err != nil {
 		log.Fatal(err)
 	}
-	if resp.StatusCode != 200 {
-		log.Fatal(resp)
-	}
-	fmt.Println(cluster)
+	fmt.Printf("Cluster deleted: %v\n", cluster)
 }
