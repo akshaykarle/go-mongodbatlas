@@ -1,6 +1,7 @@
 package mongodb
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -57,15 +58,15 @@ func assertQuery(t *testing.T, expected map[string]string, req *http.Request) {
 	assert.Equal(t, expectedValues, queryValues)
 }
 
-// assertPostForm tests that the Request has the expected key values pairs url
+// assertPostJSON tests that the Request has the expected key values pairs json
 // encoded in its Body
-func assertPostForm(t *testing.T, expected map[string]string, req *http.Request) {
-	req.ParseForm() // parses request Body to put url.Values in r.Form/r.PostForm
-	expectedValues := url.Values{}
-	for key, value := range expected {
-		expectedValues.Add(key, value)
+func assertPostJSON(t *testing.T, expected map[string]interface{}, req *http.Request) {
+	var reqJSON interface{}
+	err := json.NewDecoder(req.Body).Decode(&reqJSON)
+	if err != nil {
+		t.Errorf("error decoding request JSON %v", err)
 	}
-	assert.Equal(t, expectedValues, req.Form)
+	assert.Equal(t, expected, reqJSON)
 }
 
 // assertDone asserts that the empty struct channel is closed before the given

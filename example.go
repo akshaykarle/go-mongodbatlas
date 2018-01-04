@@ -37,4 +37,26 @@ func main() {
 		log.Fatal(resp)
 	}
 	fmt.Println(cluster)
+
+	// Cluster.Create example
+	providerSettings := mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
+	params := &mongodb.Cluster{Name: "test", MongoDBMajorVersion: "3.4", ReplicationFactor: 3, DiskSizeGB: 0.5, ProviderSettings: providerSettings}
+	cluster, resp, err = client.Cluster.Create(gid, params)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		log.Fatal(resp)
+	}
+	fmt.Println(cluster)
+
+	// Cluster.Delete example
+	resp, err = client.Cluster.Delete(gid, "test")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		log.Fatal(resp)
+	}
+	fmt.Println(cluster)
 }

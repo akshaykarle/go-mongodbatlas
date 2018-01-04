@@ -18,23 +18,23 @@ func newClusterService(sling *sling.Sling) *ClusterService {
 }
 
 type ProviderSettings struct {
-	ProviderName        string `json:"providerName"`
-	BackingProviderName string `json:"backingProviderName"`
-	RegionName          string `json:"regionName"`
-	InstanceSizeName    string `json:"instanceSizeName"`
+	ProviderName        string `json:"providerName,omitempty"`
+	BackingProviderName string `json:"backingProviderName,omitempty"`
+	RegionName          string `json:"regionName,omitempty"`
+	InstanceSizeName    string `json:"instanceSizeName,omitempty"`
 }
 
 type Cluster struct {
-	Id                  string           `json:"id"`
-	GroupId             string           `json:"groupId"`
-	Name                string           `json:"name"`
-	MongoDBVersion      string           `json:"mongoDBVersion"`
-	DiskSizeGB          float64          `json:"diskSizeGB"`
-	MongoDBMajorVersion string           `json:"mongoDBMajorVersion"`
-	BackupEnabled       bool             `json:"backupEnabled"`
-	StateName           string           `json:"stateName"`
-	ReplicationFactor   int              `json:"replicationFactor"`
-	ProviderSettings    ProviderSettings `json:"providerSettings"`
+	Id                  string           `json:"id,omitempty"`
+	GroupId             string           `json:"groupId,omitempty"`
+	Name                string           `json:"name,omitempty"`
+	MongoDBVersion      string           `json:"mongoDBVersion,omitempty"`
+	DiskSizeGB          float64          `json:"diskSizeGB,omitempty"`
+	MongoDBMajorVersion string           `json:"mongoDBMajorVersion,omitempty"`
+	BackupEnabled       bool             `json:"backupEnabled,omitempty"`
+	StateName           string           `json:"stateName,omitempty"`
+	ReplicationFactor   int              `json:"replicationFactor,omitempty"`
+	ProviderSettings    ProviderSettings `json:"providerSettings,omitempty"`
 }
 
 type listResponse struct {
@@ -55,6 +55,13 @@ func (c *ClusterService) Get(gid string, name string) (*Cluster, *http.Response,
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/clusters/%s", gid, name)
 	resp, err := c.sling.New().Get(path).Receive(cluster, apiError)
+	return cluster, resp, relevantError(err, *apiError)
+}
+
+func (c *ClusterService) Create(gid string, cluster *Cluster) (*Cluster, *http.Response, error) {
+	apiError := new(APIError)
+	path := fmt.Sprintf("%s/clusters", gid)
+	resp, err := c.sling.New().Post(path).BodyJSON(cluster).Receive(cluster, apiError)
 	return cluster, resp, relevantError(err, *apiError)
 }
 
