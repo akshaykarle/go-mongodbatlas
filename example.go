@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	dac "github.com/akshaykarle/go-http-digest-auth-client"
 	"github.com/akshaykarle/mongodb-atlas-go/mongodb"
-	dac "github.com/xinsnake/go-http-digest-auth-client"
 )
 
 func main() {
