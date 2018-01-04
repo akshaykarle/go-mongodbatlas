@@ -52,6 +52,7 @@ func TestClusterService_Create(t *testing.T) {
 			"mongoDBMajorVersion": "3.4.9",
 			"replicationFactor":   float64(3),
 			"diskSizeGB":          0.5,
+			"backupEnabled":       false,
 			"providerSettings": map[string]interface{}{
 				"providerName":     "AWS",
 				"regionName":       "US_EAST_1",
@@ -64,7 +65,7 @@ func TestClusterService_Create(t *testing.T) {
 
 	client := NewClient(httpClient)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
-	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 0.5, ProviderSettings: providerSettings}
+	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 0.5, BackupEnabled: false, ProviderSettings: providerSettings}
 	cluster, _, err := client.Cluster.Create("123", params)
 	expected := params
 	assert.Nil(t, err)
@@ -83,6 +84,7 @@ func TestClusterService_Update(t *testing.T) {
 			"mongoDBMajorVersion": "3.4.9",
 			"replicationFactor":   float64(3),
 			"diskSizeGB":          float64(5),
+			"backupEnabled":       false,
 			"providerSettings": map[string]interface{}{
 				"providerName":     "AWS",
 				"regionName":       "US_EAST_1",
@@ -95,7 +97,7 @@ func TestClusterService_Update(t *testing.T) {
 
 	client := NewClient(httpClient)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
-	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 5, ProviderSettings: providerSettings}
+	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 5, BackupEnabled: false, ProviderSettings: providerSettings}
 	cluster, _, err := client.Cluster.Update("123", "test", params)
 	expected := params
 	assert.Nil(t, err)

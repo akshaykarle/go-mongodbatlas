@@ -31,7 +31,7 @@ type Cluster struct {
 	MongoDBVersion      string           `json:"mongoDBVersion,omitempty"`
 	DiskSizeGB          float64          `json:"diskSizeGB,omitempty"`
 	MongoDBMajorVersion string           `json:"mongoDBMajorVersion,omitempty"`
-	BackupEnabled       bool             `json:"backupEnabled,omitempty"`
+	BackupEnabled       bool             `json:"backupEnabled"`
 	StateName           string           `json:"stateName,omitempty"`
 	ReplicationFactor   int              `json:"replicationFactor,omitempty"`
 	ProviderSettings    ProviderSettings `json:"providerSettings,omitempty"`
