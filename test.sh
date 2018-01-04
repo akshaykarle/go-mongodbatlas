@@ -15,9 +15,9 @@ if [ -n "${fmtRes}" ]; then
   exit 2
 fi
 
-# echo "Checking golint..."
-# lintRes=$(echo $LINTABLE | xargs -n 1 golint)
-# if [ -n "${lintRes}" ]; then
-#   echo -e "golint checking failed:\n${lintRes}"
-#   exit 2
-# fi
+echo "Checking golint..."
+lintRes=$(echo $LINTABLE | xargs -n 1 golint)
+if [ -n "${lintRes}" ]; then
+  echo -e "golint checking failed:\n${lintRes}"
+  exit 2
+fi
