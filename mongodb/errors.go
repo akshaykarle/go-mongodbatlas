@@ -4,43 +4,30 @@ import (
 	"fmt"
 )
 
-// APIError represents a Twitter API Error response
-// https://dev.twitter.com/overview/api/response-codes
+// APIError represents a MongDB Atlas API Error response
+// https://docs.atlas.mongodb.com/api/#errors
 type APIError struct {
-	Errors []ErrorDetail `json:"errors"`
-}
-
-// ErrorDetail represents an individual item in an APIError.
-type ErrorDetail struct {
-	Message string `json:"message"`
-	Code    int    `json:"code"`
+	Detail    string `json:"detail"`
+	Code      int    `json:"error"`
+	ErrorCode string `json:"errorCode"`
+	Reason    string `json:"reason"`
 }
 
 func (e APIError) Error() string {
-	if len(e.Errors) > 0 {
-		err := e.Errors[0]
-		return fmt.Sprintf("twitter: %d %v", err.Code, err.Message)
+	if e == (APIError{}) {
+		return ""
 	}
-	return ""
-}
-
-// Empty returns true if empty. Otherwise, at least 1 error message/code is
-// present and false is returned.
-func (e APIError) Empty() bool {
-	if len(e.Errors) == 0 {
-		return true
-	}
-	return false
+	return fmt.Sprintf("MongoDB Atlas: %d %v", e.Code, e.Detail)
 }
 
 // relevantError returns any non-nil http-related error (creating the request,
-// getting the response, decoding) if any. If the decoded apiError is non-zero
+// getting the response, decoding) if any. If the decoded apiError is non-nil
 // the apiError is returned. Otherwise, no errors occurred, returns nil.
 func relevantError(httpError error, apiError APIError) error {
 	if httpError != nil {
 		return httpError
 	}
-	if apiError.Empty() {
+	if apiError == (APIError{}) {
 		return nil
 	}
 	return apiError
