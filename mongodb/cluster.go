@@ -65,6 +65,13 @@ func (c *ClusterService) Create(gid string, cluster *Cluster) (*Cluster, *http.R
 	return cluster, resp, relevantError(err, *apiError)
 }
 
+func (c *ClusterService) Update(gid string, name string, cluster *Cluster) (*Cluster, *http.Response, error) {
+	apiError := new(APIError)
+	path := fmt.Sprintf("%s/clusters/%s", gid, name)
+	resp, err := c.sling.New().Patch(path).BodyJSON(cluster).Receive(cluster, apiError)
+	return cluster, resp, relevantError(err, *apiError)
+}
+
 func (c *ClusterService) Delete(gid string, name string) (*http.Response, error) {
 	cluster := new(Cluster)
 	apiError := new(APIError)

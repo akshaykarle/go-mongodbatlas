@@ -58,7 +58,7 @@ func TestClusterService_Create(t *testing.T) {
 				"instanceSizeName": "M0",
 			},
 		}
-		assertPostJSON(t, expectedBody, r)
+		assertReqJSON(t, expectedBody, r)
 		fmt.Fprintf(w, `{"name":"test","mongoDBMajorVersion":"3.4.9"}`)
 	})
 
@@ -66,6 +66,37 @@ func TestClusterService_Create(t *testing.T) {
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
 	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 0.5, ProviderSettings: providerSettings}
 	cluster, _, err := client.Cluster.Create("123", params)
+	expected := params
+	assert.Nil(t, err)
+	assert.Equal(t, expected, cluster)
+}
+
+func TestClusterService_Update(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/api/atlas/v1.0/groups/123/clusters/test", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "PATCH", r)
+		w.Header().Set("Content-Type", "application/json")
+		expectedBody := map[string]interface{}{
+			"name":                "test",
+			"mongoDBMajorVersion": "3.4.9",
+			"replicationFactor":   float64(3),
+			"diskSizeGB":          float64(5),
+			"providerSettings": map[string]interface{}{
+				"providerName":     "AWS",
+				"regionName":       "US_EAST_1",
+				"instanceSizeName": "M0",
+			},
+		}
+		assertReqJSON(t, expectedBody, r)
+		fmt.Fprintf(w, `{"name":"test","mongoDBMajorVersion":"3.4.9"}`)
+	})
+
+	client := NewClient(httpClient)
+	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
+	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 5, ProviderSettings: providerSettings}
+	cluster, _, err := client.Cluster.Update("123", "test", params)
 	expected := params
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)

@@ -60,7 +60,7 @@ func assertQuery(t *testing.T, expected map[string]string, req *http.Request) {
 
 // assertPostJSON tests that the Request has the expected key values pairs json
 // encoded in its Body
-func assertPostJSON(t *testing.T, expected map[string]interface{}, req *http.Request) {
+func assertReqJSON(t *testing.T, expected map[string]interface{}, req *http.Request) {
 	var reqJSON interface{}
 	err := json.NewDecoder(req.Body).Decode(&reqJSON)
 	if err != nil {
