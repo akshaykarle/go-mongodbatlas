@@ -1,4 +1,4 @@
-# mongdb-atlas-go
+# mongodb-atlas-go [![Build Status](https://travis-ci.org/akshaykarle/mongodb-atlas-go.svg?branch=master)](https://travis-ci.org/akshaykarle/mongodb-atlas-go)
 A Go client library for the [MongoDB Atlas API](https://docs.atlas.mongodb.com/api/).
 
 ## Getting started
