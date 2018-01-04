@@ -18,40 +18,40 @@ func main() {
 	httpClient := &http.Client{Transport: &t}
 	client := mongodb.NewClient(httpClient)
 
-	// Cluster.List example
-	clusters, _, err := client.Cluster.List(gid)
+	// Clusters.List example
+	clusters, _, err := client.Clusters.List(gid)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("Clusters list: %v\n", clusters)
 
-	// Cluster.Get example
-	cluster, _, err := client.Cluster.Get(gid, clusters[0].Name)
+	// Clusters.Get example
+	cluster, _, err := client.Clusters.Get(gid, clusters[0].Name)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Cluster get: %v\n", cluster)
+	fmt.Printf("Clusters get: %v\n", cluster)
 
-	// Cluster.Create example
+	// Clusters.Create example
 	providerSettings := mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
 	params := &mongodb.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 0.5, BackupEnabled: false, ProviderSettings: providerSettings}
-	cluster, _, err = client.Cluster.Create(gid, params)
+	cluster, _, err = client.Clusters.Create(gid, params)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("Cluster created: %v\n", cluster)
 
-	// Cluster.Update example
+	// Clusters.Update example
 	providerSettings = mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
 	params = &mongodb.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 5, BackupEnabled: false, ProviderSettings: providerSettings}
-	cluster, _, err = client.Cluster.Create(gid, params)
+	cluster, _, err = client.Clusters.Update(gid, "test", params)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("Cluster updated: %v\n", cluster)
 
-	// Cluster.Delete example
-	_, err = client.Cluster.Delete(gid, "test")
+	// Clusters.Delete example
+	_, err = client.Clusters.Delete(gid, "test")
 	if err != nil {
 		log.Fatal(err)
 	}

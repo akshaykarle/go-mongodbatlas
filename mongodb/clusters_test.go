@@ -18,7 +18,7 @@ func TestClusterService_List(t *testing.T) {
 	})
 
 	client := NewClient(httpClient)
-	clusters, _, err := client.Cluster.List("123")
+	clusters, _, err := client.Clusters.List("123")
 	expected := []Cluster{Cluster{Name: "test", MongoDBMajorVersion: "3.4.9"}}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, clusters)
@@ -34,7 +34,7 @@ func TestClusterService_Get(t *testing.T) {
 	})
 
 	client := NewClient(httpClient)
-	cluster, _, err := client.Cluster.Get("123", "test")
+	cluster, _, err := client.Clusters.Get("123", "test")
 	expected := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9"}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)
@@ -66,7 +66,7 @@ func TestClusterService_Create(t *testing.T) {
 	client := NewClient(httpClient)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
 	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 0.5, BackupEnabled: false, ProviderSettings: providerSettings}
-	cluster, _, err := client.Cluster.Create("123", params)
+	cluster, _, err := client.Clusters.Create("123", params)
 	expected := params
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)
@@ -98,7 +98,7 @@ func TestClusterService_Update(t *testing.T) {
 	client := NewClient(httpClient)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
 	params := &Cluster{Name: "test", MongoDBMajorVersion: "3.4.9", ReplicationFactor: 3, DiskSizeGB: 5, BackupEnabled: false, ProviderSettings: providerSettings}
-	cluster, _, err := client.Cluster.Update("123", "test", params)
+	cluster, _, err := client.Clusters.Update("123", "test", params)
 	expected := params
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)
@@ -114,7 +114,7 @@ func TestClusterService_Delete(t *testing.T) {
 	})
 
 	client := NewClient(httpClient)
-	resp, err := client.Cluster.Delete("123", "test")
+	resp, err := client.Clusters.Delete("123", "test")
 	assert.Nil(t, err)
 	assert.Equal(t, 200, resp.StatusCode)
 }
