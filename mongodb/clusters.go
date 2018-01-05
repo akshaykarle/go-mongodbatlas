@@ -42,8 +42,8 @@ type Cluster struct {
 	ProviderSettings    ProviderSettings `json:"providerSettings,omitempty"`
 }
 
-// listResponse is the response from the ClusterService.List.
-type listResponse struct {
+// clusterListResponse is the response from the ClusterService.List.
+type clusterListResponse struct {
 	Results    []Cluster `json:"results"`
 	TotalCount int       `json:"totalCount"`
 }
@@ -51,7 +51,7 @@ type listResponse struct {
 // List all clusters for the specified group.
 // https://docs.atlas.mongodb.com/reference/api/clusters-get-all/
 func (c *ClusterService) List(gid string) ([]Cluster, *http.Response, error) {
-	response := new(listResponse)
+	response := new(clusterListResponse)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/clusters", gid)
 	resp, err := c.sling.New().Get(path).Receive(response, apiError)

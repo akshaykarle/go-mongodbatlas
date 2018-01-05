@@ -12,6 +12,7 @@ const apiURL = "https://cloud.mongodb.com/api/atlas/v1.0/"
 type Client struct {
 	sling    *sling.Sling
 	Clusters *ClusterService
+	VPC      *VPCService
 }
 
 // NewClient returns a new Client.
@@ -20,5 +21,6 @@ func NewClient(httpClient *http.Client) *Client {
 	return &Client{
 		sling:    base,
 		Clusters: newClusterService(base.New()),
+		VPC:      newVPCService(base.New()),
 	}
 }
