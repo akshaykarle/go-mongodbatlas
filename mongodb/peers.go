@@ -50,10 +50,10 @@ func (c *PeerService) List(gid string) ([]Peer, *http.Response, error) {
 
 // Get a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-get-connection/
-func (c *PeerService) Get(gid string, name string) (*Peer, *http.Response, error) {
+func (c *PeerService) Get(gid string, id string) (*Peer, *http.Response, error) {
 	peer := new(Peer)
 	apiError := new(APIError)
-	path := fmt.Sprintf("%s/peers/%s", gid, name)
+	path := fmt.Sprintf("%s/peers/%s", gid, id)
 	resp, err := c.sling.New().Get(path).Receive(peer, apiError)
 	return peer, resp, relevantError(err, *apiError)
 }
@@ -69,19 +69,19 @@ func (c *PeerService) Create(gid string, peer *Peer) (*Peer, *http.Response, err
 
 // Update a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-update-peering-connection/
-func (c *PeerService) Update(gid string, name string, peer *Peer) (*Peer, *http.Response, error) {
+func (c *PeerService) Update(gid string, id string, peer *Peer) (*Peer, *http.Response, error) {
 	apiError := new(APIError)
-	path := fmt.Sprintf("%s/peers/%s", gid, name)
+	path := fmt.Sprintf("%s/peers/%s", gid, id)
 	resp, err := c.sling.New().Patch(path).BodyJSON(peer).Receive(peer, apiError)
 	return peer, resp, relevantError(err, *apiError)
 }
 
 // Delete a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-delete-peering-connection/
-func (c *PeerService) Delete(gid string, name string) (*http.Response, error) {
+func (c *PeerService) Delete(gid string, id string) (*http.Response, error) {
 	peer := new(Peer)
 	apiError := new(APIError)
-	path := fmt.Sprintf("%s/peers/%s", gid, name)
+	path := fmt.Sprintf("%s/peers/%s", gid, id)
 	resp, err := c.sling.New().Delete(path).Receive(peer, apiError)
 	return resp, relevantError(err, *apiError)
 }

@@ -37,13 +37,13 @@ func TestPeerService_Get(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/1112222b3bf99403840e8934", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
 		fmt.Fprintf(w, `{"awsAccountId" : "999900000000","connectionId" : null,"errorStateName" : null,"id" : "1112222b3bf99403840e8934","routeTableCidrBlock" : "10.15.0.0/16","statusName" : "INITIATING","vpcId" : "vpc-abc123abc123","containerId" : "1112222b3bf99403840e8934"}`)
 	})
 
 	client := NewClient(httpClient)
-	peer, _, err := client.Peers.Get("123", "test")
+	peer, _, err := client.Peers.Get("123", "1112222b3bf99403840e8934")
 	expected := &Peer{
 		AwsAccountID:        "999900000000",
 		ID:                  "1112222b3bf99403840e8934",
@@ -90,7 +90,7 @@ func TestPeerService_Update(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/1112222b3bf99403840e8934", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "PATCH", r)
 		w.Header().Set("Content-Type", "application/json")
 		expectedBody := map[string]interface{}{"routeTableCidrBlock": "10.15.0.0/16"}
@@ -100,7 +100,7 @@ func TestPeerService_Update(t *testing.T) {
 
 	client := NewClient(httpClient)
 	params := &Peer{RouteTableCidrBlock: "10.15.0.0/16"}
-	peer, _, err := client.Peers.Update("123", "test", params)
+	peer, _, err := client.Peers.Update("123", "1112222b3bf99403840e8934", params)
 	expected := params
 	assert.Nil(t, err)
 	assert.Equal(t, expected, peer)
@@ -110,13 +110,13 @@ func TestPeerService_Delete(t *testing.T) {
 	httpClient, mux, server := testServer()
 	defer server.Close()
 
-	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/1112222b3bf99403840e8934", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "DELETE", r)
 		fmt.Fprintf(w, `{}`)
 	})
 
 	client := NewClient(httpClient)
-	resp, err := client.Peers.Delete("123", "test")
+	resp, err := client.Peers.Delete("123", "1112222b3bf99403840e8934")
 	assert.Nil(t, err)
 	assert.Equal(t, 200, resp.StatusCode)
 }
