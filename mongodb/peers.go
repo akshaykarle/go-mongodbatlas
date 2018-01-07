@@ -7,14 +7,14 @@ import (
 	"github.com/dghubble/sling"
 )
 
-// VPCService provides methods for accessing MongoDB Atlas VPC API endpoints.
-type VPCService struct {
+// PeerService provides methods for accessing MongoDB Atlas Peers API endpoints.
+type PeerService struct {
 	sling *sling.Sling
 }
 
-// newVPCService returns a new VPCService.
-func newVPCService(sling *sling.Sling) *VPCService {
-	return &VPCService{
+// newPeerService returns a new PeerService.
+func newPeerService(sling *sling.Sling) *PeerService {
+	return &PeerService{
 		sling: sling.Path("groups/"),
 	}
 }
@@ -32,7 +32,7 @@ type Peer struct {
 	ContainerID         string `json:"containerId,omitempty"`
 }
 
-// peerListResponse is the response from the VPCService.List.
+// peerListResponse is the response from the PeerService.List.
 type peerListResponse struct {
 	Results    []Peer `json:"results"`
 	TotalCount int    `json:"totalCount"`
@@ -40,7 +40,7 @@ type peerListResponse struct {
 
 // List all peers for the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-get-connections-list/
-func (c *VPCService) List(gid string) ([]Peer, *http.Response, error) {
+func (c *PeerService) List(gid string) ([]Peer, *http.Response, error) {
 	response := new(peerListResponse)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/peers", gid)
@@ -50,7 +50,7 @@ func (c *VPCService) List(gid string) ([]Peer, *http.Response, error) {
 
 // Get a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-get-connection/
-func (c *VPCService) Get(gid string, name string) (*Peer, *http.Response, error) {
+func (c *PeerService) Get(gid string, name string) (*Peer, *http.Response, error) {
 	peer := new(Peer)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/peers/%s", gid, name)
@@ -60,7 +60,7 @@ func (c *VPCService) Get(gid string, name string) (*Peer, *http.Response, error)
 
 // Create a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-create-peering-connection/
-func (c *VPCService) Create(gid string, peer *Peer) (*Peer, *http.Response, error) {
+func (c *PeerService) Create(gid string, peer *Peer) (*Peer, *http.Response, error) {
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/peers", gid)
 	resp, err := c.sling.New().Post(path).BodyJSON(peer).Receive(peer, apiError)
@@ -69,7 +69,7 @@ func (c *VPCService) Create(gid string, peer *Peer) (*Peer, *http.Response, erro
 
 // Update a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-update-peering-connection/
-func (c *VPCService) Update(gid string, name string, peer *Peer) (*Peer, *http.Response, error) {
+func (c *PeerService) Update(gid string, name string, peer *Peer) (*Peer, *http.Response, error) {
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/peers/%s", gid, name)
 	resp, err := c.sling.New().Patch(path).BodyJSON(peer).Receive(peer, apiError)
@@ -78,7 +78,7 @@ func (c *VPCService) Update(gid string, name string, peer *Peer) (*Peer, *http.R
 
 // Delete a peer in the specified group.
 // https://docs.atlas.mongodb.com/reference/api/vpc-delete-peering-connection/
-func (c *VPCService) Delete(gid string, name string) (*http.Response, error) {
+func (c *PeerService) Delete(gid string, name string) (*http.Response, error) {
 	peer := new(Peer)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/peers/%s", gid, name)

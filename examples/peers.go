@@ -18,45 +18,45 @@ func main() {
 	httpClient := &http.Client{Transport: &t}
 	client := mongodb.NewClient(httpClient)
 
-	// VPC.List example
-	peers, _, err := client.VPC.List(gid)
+	// Peers.List example
+	peers, _, err := client.Peers.List(gid)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("VPC peers list: %v\n", peers)
+	fmt.Printf("Peers peers list: %v\n", peers)
 
-	// VPC.Get example
-	peer, _, err := client.VPC.Get(gid, peers[0].ID)
+	// Peers.Get example
+	peer, _, err := client.Peers.Get(gid, peers[0].ID)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("VPC peer get: %v\n", peer)
+	fmt.Printf("Peers peer get: %v\n", peer)
 
-	// VPC.Create example
+	// Peers.Create example
 	params := &Peer{
 		VpcID:               "vpc-123456",
 		AwsAccountID:        "abc123abc123",
 		RouteTableCidrBlock: "192.168.0.0/24",
 		ContainerID:         "1112222b3bf99403840e8934",
 	}
-	peer, _, err = client.VPC.Create(gid, params)
+	peer, _, err = client.Peers.Create(gid, params)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("VPC peer created: %v\n", peer)
+	fmt.Printf("Peers peer created: %v\n", peer)
 
-	// VPC.Update example
+	// Peers.Update example
 	params = &Peer{RouteTableCidrBlock: "192.168.0.0/24"}
-	peer, _, err = client.VPC.Update(gid, peer.ID, params)
+	peer, _, err = client.Peers.Update(gid, peer.ID, params)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("VPC peer updated: %v\n", peer)
+	fmt.Printf("Peers peer updated: %v\n", peer)
 
-	// VPC.Delete example
-	_, err = client.VPC.Delete(gid, peer.ID)
+	// Peers.Delete example
+	_, err = client.Peers.Delete(gid, peer.ID)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("VPC peer deleted: %v\n", peer)
+	fmt.Printf("Peers peer deleted: %v\n", peer)
 }
