@@ -81,7 +81,14 @@ func TestPeerService_Create(t *testing.T) {
 		ContainerID:         "1112222b3bf99403840e8934",
 	}
 	peer, _, err := client.Peers.Create("123", params)
-	expected := params
+	expected := &Peer{
+		ID:                  "1112222b3bf99403840e8934",
+		VpcID:               "vpc-123456",
+		AwsAccountID:        "abc123abc123",
+		RouteTableCidrBlock: "192.168.0.0/24",
+		ContainerID:         "1112222b3bf99403840e8934",
+		StatusName:          "INITIATING",
+	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, peer)
 }
@@ -101,7 +108,14 @@ func TestPeerService_Update(t *testing.T) {
 	client := NewClient(httpClient)
 	params := &Peer{RouteTableCidrBlock: "10.15.0.0/16"}
 	peer, _, err := client.Peers.Update("123", "1112222b3bf99403840e8934", params)
-	expected := params
+	expected := &Peer{
+		ID:                  "1112222b3bf99403840e8934",
+		VpcID:               "vpc-123456",
+		AwsAccountID:        "abc123abc123",
+		RouteTableCidrBlock: "10.15.0.0/16",
+		ContainerID:         "1112222b3bf99403840e8934",
+		StatusName:          "INITIATING",
+	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, peer)
 }
