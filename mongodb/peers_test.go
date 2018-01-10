@@ -39,7 +39,7 @@ func TestPeerService_Get(t *testing.T) {
 
 	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers/1112222b3bf99403840e8934", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "GET", r)
-		fmt.Fprintf(w, `{"awsAccountId" : "999900000000","connectionId" : null,"errorStateName" : null,"id" : "1112222b3bf99403840e8934","routeTableCidrBlock" : "10.15.0.0/16","statusName" : "INITIATING","vpcId" : "vpc-abc123abc123","containerId" : "1112222b3bf99403840e8934"}`)
+		fmt.Fprintf(w, `{"awsAccountId" : "999900000000","connectionId" : "pcx-123","errorStateName" : null,"id" : "1112222b3bf99403840e8934","routeTableCidrBlock" : "10.15.0.0/16","statusName" : "INITIATING","vpcId" : "vpc-abc123abc123","containerId" : "1112222b3bf99403840e8934"}`)
 	})
 
 	client := NewClient(httpClient)
@@ -51,6 +51,7 @@ func TestPeerService_Get(t *testing.T) {
 		StatusName:          "INITIATING",
 		VpcID:               "vpc-abc123abc123",
 		ContainerID:         "1112222b3bf99403840e8934",
+		ConnectionID:        "pcx-123",
 	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, peer)
