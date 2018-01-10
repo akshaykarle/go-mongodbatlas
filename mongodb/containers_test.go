@@ -79,7 +79,13 @@ func TestContainerService_Create(t *testing.T) {
 		RegionName:     "US_EAST_1",
 	}
 	container, _, err := client.Containers.Create("123", params)
-	expected := params
+	expected := &Container{
+		ID:             "1112222b3bf99403840e8934",
+		AtlasCidrBlock: "192.168.248.0/21",
+		ProviderName:   "AWS",
+		RegionName:     "US_EAST_1",
+		Provisioned:    false,
+	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, container)
 }
@@ -91,15 +97,21 @@ func TestContainerService_Update(t *testing.T) {
 	mux.HandleFunc("/api/atlas/v1.0/groups/123/containers/1112222b3bf99403840e8934", func(w http.ResponseWriter, r *http.Request) {
 		assertMethod(t, "PATCH", r)
 		w.Header().Set("Content-Type", "application/json")
-		expectedBody := map[string]interface{}{"atlasCidrBlock": "192.168.248.0/21"}
+		expectedBody := map[string]interface{}{"atlasCidrBlock": "192.168.268.0/21"}
 		assertReqJSON(t, expectedBody, r)
-		fmt.Fprintf(w, `{"atlasCidrBlock":"192.168.248.0/21","id":"1112222b3bf99403840e8934","providerName":"AWS","provisioned":false,"regionName":"US_EAST_1","vpcId":null}`)
+		fmt.Fprintf(w, `{"atlasCidrBlock":"192.168.268.0/21","id":"1112222b3bf99403840e8934","providerName":"AWS","provisioned":false,"regionName":"US_EAST_1","vpcId":null}`)
 	})
 
 	client := NewClient(httpClient)
-	params := &Container{AtlasCidrBlock: "192.168.248.0/21"}
+	params := &Container{AtlasCidrBlock: "192.168.268.0/21"}
 	container, _, err := client.Containers.Update("123", "1112222b3bf99403840e8934", params)
-	expected := params
+	expected := &Container{
+		ID:             "1112222b3bf99403840e8934",
+		AtlasCidrBlock: "192.168.268.0/21",
+		ProviderName:   "AWS",
+		RegionName:     "US_EAST_1",
+		Provisioned:    false,
+	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, container)
 }
