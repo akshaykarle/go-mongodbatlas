@@ -7,7 +7,7 @@ import (
 	"os"
 
 	dac "github.com/akshaykarle/go-http-digest-auth-client"
-	"github.com/akshaykarle/go-mongodbatlas/mongodb"
+	ma "github.com/akshaykarle/go-mongodbatlas/mongodb"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	gid := os.Args[3]
 	t := dac.NewTransport(username, password)
 	httpClient := &http.Client{Transport: &t}
-	client := mongodb.NewClient(httpClient)
+	client := ma.NewClient(httpClient)
 
 	// Peers.List example
 	peers, _, err := client.Peers.List(gid)

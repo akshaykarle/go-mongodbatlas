@@ -7,7 +7,7 @@ import (
 	"os"
 
 	dac "github.com/akshaykarle/go-http-digest-auth-client"
-	"github.com/akshaykarle/go-mongodbatlas/mongodb"
+	ma "github.com/akshaykarle/go-mongodbatlas/mongodb"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	// orgId := os.Args[3]
 	t := dac.NewTransport(username, password)
 	httpClient := &http.Client{Transport: &t}
-	client := mongodb.NewClient(httpClient)
+	client := ma.NewClient(httpClient)
 
 	// Projects.List example
 	projects, _, err := client.Projects.List()
@@ -33,7 +33,7 @@ func main() {
 	fmt.Printf("project get: %v\n", project)
 
 	// Projects.Create example
-	params := &mongodb.Project{
+	params := &ma.Project{
 		OrgID: orgId,
 		Name:  "test",
 	}

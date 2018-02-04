@@ -7,7 +7,7 @@ import (
 	"os"
 
 	dac "github.com/akshaykarle/go-http-digest-auth-client"
-	"github.com/akshaykarle/go-mongodbatlas/mongodb"
+	ma "github.com/akshaykarle/go-mongodbatlas/mongodbatlas"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	gid := os.Args[3]
 	t := dac.NewTransport(username, password)
 	httpClient := &http.Client{Transport: &t}
-	client := mongodb.NewClient(httpClient)
+	client := ma.NewClient(httpClient)
 
 	// Clusters.List example
 	clusters, _, err := client.Clusters.List(gid)
@@ -33,8 +33,8 @@ func main() {
 	fmt.Printf("Clusters get: %v\n", cluster)
 
 	// Clusters.Create example
-	providerSettings := mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
-	params := &mongodb.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 0.5, BackupEnabled: false, ProviderSettings: providerSettings}
+	providerSettings := ma.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
+	params := &ma.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 0.5, BackupEnabled: false, ProviderSettings: providerSettings}
 	cluster, _, err = client.Clusters.Create(gid, params)
 	if err != nil {
 		log.Fatal(err)
@@ -42,8 +42,8 @@ func main() {
 	fmt.Printf("Cluster created: %v\n", cluster)
 
 	// Clusters.Update example
-	providerSettings = mongodb.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
-	params = &mongodb.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 5, BackupEnabled: false, ProviderSettings: providerSettings}
+	providerSettings = ma.ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M10"}
+	params = &ma.Cluster{Name: "test", ReplicationFactor: 3, DiskSizeGB: 5, BackupEnabled: false, ProviderSettings: providerSettings}
 	cluster, _, err = client.Clusters.Update(gid, "test", params)
 	if err != nil {
 		log.Fatal(err)
