@@ -7,7 +7,7 @@ import (
 	"os"
 
 	dac "github.com/akshaykarle/go-http-digest-auth-client"
-	ma "github.com/akshaykarle/go-mongodbatlas/mongodb"
+	ma "github.com/akshaykarle/go-mongodbatlas/mongodbatlas"
 )
 
 func main() {

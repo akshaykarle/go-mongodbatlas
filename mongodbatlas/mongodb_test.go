@@ -48,17 +48,7 @@ func assertMethod(t *testing.T, expectedMethod string, req *http.Request) {
 	assert.Equal(t, expectedMethod, req.Method)
 }
 
-// assertQuery tests that the Request has the expected url query key/val pairs
-func assertQuery(t *testing.T, expected map[string]string, req *http.Request) {
-	queryValues := req.URL.Query()
-	expectedValues := url.Values{}
-	for key, value := range expected {
-		expectedValues.Add(key, value)
-	}
-	assert.Equal(t, expectedValues, queryValues)
-}
-
-// assertPostJSON tests that the Request has the expected key values pairs json
+// assertReqJSON tests that the Request has the expected key values pairs json
 // encoded in its Body
 func assertReqJSON(t *testing.T, expected map[string]interface{}, req *http.Request) {
 	var reqJSON interface{}
@@ -69,26 +59,13 @@ func assertReqJSON(t *testing.T, expected map[string]interface{}, req *http.Requ
 	assert.Equal(t, expected, reqJSON)
 }
 
-// assertDone asserts that the empty struct channel is closed before the given
-// timeout elapses.
-func assertDone(t *testing.T, ch <-chan struct{}, timeout time.Duration) {
-	select {
-	case <-ch:
-		_, more := <-ch
-		assert.False(t, more)
-	case <-time.After(timeout):
-		t.Errorf("expected channel to be closed within timeout %v", timeout)
+// assertReqJSONList tests that the Request has the expected list of key values
+// pairs json encoded in its Body
+func assertReqJSONList(t *testing.T, expected []interface{}, req *http.Request) {
+	var reqJSON interface{}
+	err := json.NewDecoder(req.Body).Decode(&reqJSON)
+	if err != nil {
+		t.Errorf("error decoding request JSON %v", err)
 	}
-}
-
-// assertClosed asserts that the channel is closed before the given timeout
-// elapses.
-func assertClosed(t *testing.T, ch <-chan interface{}, timeout time.Duration) {
-	select {
-	case <-ch:
-		_, more := <-ch
-		assert.False(t, more)
-	case <-time.After(timeout):
-		t.Errorf("expected channel to be closed within timeout %v", timeout)
-	}
+	assert.Equal(t, expected, reqJSON)
 }
