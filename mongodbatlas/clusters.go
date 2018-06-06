@@ -27,9 +27,9 @@ type AutoScaling struct {
 // ReplicationSpec describes a region’s priority in elections,
 // and the number and type of MongoDB nodes Atlas deploys to the region.
 type ReplicationSpec struct {
-	Priority       int `json:"priority,omitempty"`
-	ElectableNodes int `json:"electableNodes,omitempty"`
-	ReadOnlyNodes  int `json:"readOnlyNodes,omitempty"`
+	Priority       int `json:"priority"`
+	ElectableNodes int `json:"electableNodes"`
+	ReadOnlyNodes  int `json:"readOnlyNodes"`
 }
 
 // ProviderSettings is the configuration for the provisioned servers on which MongoDB runs.
