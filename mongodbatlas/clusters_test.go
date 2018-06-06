@@ -62,6 +62,13 @@ func TestClusterService_Create(t *testing.T) {
 				"regionName":       "US_EAST_1",
 				"instanceSizeName": "M0",
 			},
+			"replicationSpec": map[string]interface{}{
+				"US_EAST_1": map[string]interface{}{
+					"priority":       float64(7),
+					"electableNodes": float64(2),
+					"readOnlyNodes":  float64(1),
+				},
+			},
 		}
 		assertReqJSON(t, expectedBody, r)
 		fmt.Fprintf(w, `{
@@ -78,12 +85,22 @@ func TestClusterService_Create(t *testing.T) {
 				"providerName":"AWS",
 				"regionName":"US_EAST_1",
 				"instanceSizeName":"M0"
+			},
+			"replicationSpec":{
+				"US_EAST_1":{
+					"priority":7,
+					"electableNodes":2,
+					"readOnlyNodes":1
+				}
 			}
 		}`)
 	})
 
 	client := NewClient(httpClient)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
+	replicationSpec := map[string]ReplicationSpec{
+		"US_EAST_1": ReplicationSpec{Priority: 7, ElectableNodes: 2, ReadOnlyNodes: 1},
+	}
 	params := &Cluster{
 		Name:                "test",
 		MongoDBMajorVersion: "3.4",
@@ -91,6 +108,7 @@ func TestClusterService_Create(t *testing.T) {
 		BackupEnabled:       false,
 		DiskSizeGB:          10.5,
 		ProviderSettings:    providerSettings,
+		ReplicationSpec:     replicationSpec,
 	}
 	cluster, _, err := client.Clusters.Create("123", params)
 	expected := &Cluster{
@@ -101,6 +119,7 @@ func TestClusterService_Create(t *testing.T) {
 		Paused:              false,
 		DiskSizeGB:          10,
 		ProviderSettings:    providerSettings,
+		ReplicationSpec:     replicationSpec,
 	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)
@@ -137,6 +156,13 @@ func TestClusterService_Update(t *testing.T) {
 				"providerName":"AWS",
 				"regionName":"US_EAST_1",
 				"instanceSizeName":"M0"
+			},
+			"replicationSpec":{
+				"US_EAST_1":{
+					"priority":7,
+					"electableNodes":2,
+					"readOnlyNodes":1
+				}
 			}
 		}`)
 	})
@@ -147,6 +173,9 @@ func TestClusterService_Update(t *testing.T) {
 	}
 	cluster, _, err := client.Clusters.Update("123", "test", params)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
+	replicationSpec := map[string]ReplicationSpec{
+		"US_EAST_1": ReplicationSpec{Priority: 7, ElectableNodes: 2, ReadOnlyNodes: 1},
+	}
 	expected := &Cluster{
 		Name:                "test",
 		MongoDBMajorVersion: "3.4",
@@ -155,6 +184,7 @@ func TestClusterService_Update(t *testing.T) {
 		Paused:              false,
 		DiskSizeGB:          float64(5),
 		ProviderSettings:    providerSettings,
+		ReplicationSpec:     replicationSpec,
 	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, cluster)
