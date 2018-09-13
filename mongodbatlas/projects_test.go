@@ -108,3 +108,18 @@ func TestProjectService_Create(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, expected, project)
 }
+
+func TestProjectService_Delete(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/api/atlas/v1.0/groups/5a0a1e7e0f2912c554080ae6", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "DELETE", r)
+		fmt.Fprintf(w, `{}`)
+	})
+
+	client := NewClient(httpClient)
+	resp, err := client.Projects.Delete("5a0a1e7e0f2912c554080ae6")
+	assert.Nil(t, err)
+	assert.Equal(t, 200, resp.StatusCode)
+}

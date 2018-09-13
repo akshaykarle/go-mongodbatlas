@@ -49,4 +49,11 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("project get: %v\n", project)
+
+	// Projects.Delete example
+	_, err = client.Projects.Delete(project.Id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("project deleted: %v\n", project)
 }
