@@ -48,12 +48,13 @@ func TestClusterService_Create(t *testing.T) {
 		assertMethod(t, "POST", r)
 		w.Header().Set("Content-Type", "application/json")
 		expectedBody := map[string]interface{}{
-			"name":                "test",
-			"mongoDBMajorVersion": "3.4",
-			"replicationFactor":   float64(3),
-			"backupEnabled":       false,
-			"paused":              false,
-			"diskSizeGB":          10.5,
+			"name":                  "test",
+			"mongoDBMajorVersion":   "3.4",
+			"replicationFactor":     float64(3),
+			"backupEnabled":         false,
+			"providerBackupEnabled": false,
+			"paused":                false,
+			"diskSizeGB":            10.5,
 			"autoScaling": map[string]interface{}{
 				"diskGBEnabled": false,
 			},
@@ -76,6 +77,7 @@ func TestClusterService_Create(t *testing.T) {
 			"mongoDBMajorVersion":"3.4",
 			"replicationFactor":3,
 			"backupEnabled":false,
+			"providerBackupEnabled":false,
 			"diskSizeGB":10,
 			"paused":false,
 			"autoScaling":{
@@ -133,9 +135,10 @@ func TestClusterService_Update(t *testing.T) {
 		assertMethod(t, "PATCH", r)
 		w.Header().Set("Content-Type", "application/json")
 		expectedBody := map[string]interface{}{
-			"diskSizeGB":    float64(5),
-			"backupEnabled": false,
-			"paused":        false,
+			"diskSizeGB":            float64(5),
+			"backupEnabled":         false,
+			"providerBackupEnabled": false,
+			"paused":                false,
 			"autoScaling": map[string]interface{}{
 				"diskGBEnabled": false,
 			},
@@ -147,6 +150,7 @@ func TestClusterService_Update(t *testing.T) {
 			"mongoDBMajorVersion":"3.4",
 			"replicationFactor":3,
 			"backupEnabled":false,
+			"providerBackupEnabled":false,
 			"diskSizeGB":5,
 			"paused":false,
 			"autoScaling":{
