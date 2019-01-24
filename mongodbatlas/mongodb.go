@@ -20,6 +20,7 @@ type Client struct {
 	DatabaseUsers       *DatabaseUserService
 	Organizations       *OrganizationService
 	AlertConfigurations *AlertConfigurationService
+	SnapshotSchedule    *SnapshotScheduleService
 }
 
 // NewClient returns a new Client.
@@ -37,5 +38,6 @@ func NewClient(httpClient *http.Client) *Client {
 		DatabaseUsers:       newDatabaseUserService(base.New()),
 		Organizations:       newOrganizationService(base.New()),
 		AlertConfigurations: newAlertConfigurationService(base.New()),
+		SnapshotSchedule:    newSnapshotScheduleService(base.New()),
 	}
 }
