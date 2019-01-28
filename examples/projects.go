@@ -13,7 +13,7 @@ import (
 func main() {
 	username := os.Args[1]
 	password := os.Args[2]
-	orgId := os.Args[3]
+	orgID := os.Args[3]
 	t := dac.NewTransport(username, password)
 	httpClient := &http.Client{Transport: &t}
 	client := ma.NewClient(httpClient)
@@ -34,7 +34,7 @@ func main() {
 
 	// Projects.Create example
 	params := &ma.Project{
-		OrgID: orgId,
+		OrgID: orgID,
 		Name:  "test",
 	}
 	project, _, err = client.Projects.Create(params)
