@@ -29,6 +29,7 @@ type SnapshotSchedule struct {
 	PointInTimeWindowHours         float64 `json:"pointInTimeWindowHours,omitempty"`
 	WeeklySnapshotRetentionWeeks   float64 `json:"weeklySnapshotRetentionWeeks,omitempty"`
 	MonthlySnapshotRetentionMonths float64 `json:"monthlySnapshotRetentionMonths,omitempty"`
+	ClusterCheckpintIntervalMin    float64 `json:"clusterCheckpintIntervalMin,omitempty"`
 }
 
 // Get the snapshot schedule for the specified cluster

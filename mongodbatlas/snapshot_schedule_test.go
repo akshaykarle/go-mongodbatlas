@@ -51,8 +51,6 @@ func TestSnapshotScheduleService_Update(t *testing.T) {
 		assertMethod(t, "PATCH", r)
 		w.Header().Set("Content-Type", "application/json")
 		expectedBody := map[string]interface{}{
-			"groupId":                        "123",
-			"clusterId":                      "456",
 			"snapshotIntervalHours":          float64(6),
 			"snapshotRetentionDays":          float64(2),
 			"dailySnapshotRetentionDays":     float64(7),
@@ -76,8 +74,6 @@ func TestSnapshotScheduleService_Update(t *testing.T) {
 
 	client := NewClient(httpClient)
 	params := &SnapshotSchedule{
-		GroupID:                        "123",
-		ClusterID:                      "456",
 		SnapshotIntervalHours:          float64(6),
 		SnapshotRetentionDays:          float64(2),
 		DailySnapshotRetentionDays:     float64(7),
