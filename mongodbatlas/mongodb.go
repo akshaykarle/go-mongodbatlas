@@ -21,6 +21,7 @@ type Client struct {
 	Organizations       *OrganizationService
 	AlertConfigurations *AlertConfigurationService
 	SnapshotSchedule    *SnapshotScheduleService
+	AtlasUsers          *AtlasUserService
 }
 
 // NewClient returns a new Client.
@@ -39,5 +40,6 @@ func NewClient(httpClient *http.Client) *Client {
 		Organizations:       newOrganizationService(base.New()),
 		AlertConfigurations: newAlertConfigurationService(base.New()),
 		SnapshotSchedule:    newSnapshotScheduleService(base.New()),
+		AtlasUsers:          newAtlasUserService(base.New()),
 	}
 }
