@@ -2,7 +2,7 @@ language: go
 go:
   - "1.12.x"
   - master
-install: false
+install: true
 script:
   - ./test.sh
 matrix:
