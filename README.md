@@ -8,12 +8,6 @@ go run examples/clusters.go <username> <mongodb-atlas-api-key> <group-id>
 ```
 
 ## Development & Contributing
-### Installing dependencies
-```
-go get github.com/golang/lint/golint
-go get github.com/akshaykarle/go-http-digest-auth-client
-go get -v -t ./mongodbatlas
-```
 
 ### Testing
 Run `./test.sh`

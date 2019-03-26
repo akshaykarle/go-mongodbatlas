@@ -1,11 +1,8 @@
 language: go
 go:
-  - "1.10.x"
+  - "1.12.x"
   - master
-install:
-  - go get github.com/golang/lint/golint
-  - go get github.com/akshaykarle/go-http-digest-auth-client
-  - go get -v -t ./mongodbatlas
+install: false
 script:
   - ./test.sh
 matrix:
