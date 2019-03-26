@@ -6,6 +6,7 @@ env:
   - GO111MODULE=on
 install: true
 script:
+  - GO111MODULE=off go get golang.org/x/lint/golint
   - ./test.sh
 matrix:
   fast_finish: true
