@@ -1,0 +1,8 @@
+github.com/akshaykarle/go-http-digest-auth-client v0.3.0 h1:2oUUOzwJKP4lvUXlBYqD4mbh96pREVJb2DHeOb5gWzs=
+github.com/akshaykarle/go-http-digest-auth-client v0.3.0/go.mod h1:z9UGM6ci9s+L2RVvUrtPtv8MfQ0mdrJoDS+7hyKN6fE=
+github.com/akshaykarle/go-mongodbatlas v0.0.0-20190303203805-1577ef1c8f81 h1:fpFMiUS/fttY4agDyesKdBwlSGoKkPEx7L3uumDEu14=
+github.com/akshaykarle/go-mongodbatlas v0.0.0-20190303203805-1577ef1c8f81/go.mod h1:wY65zGME6QBTNb8N583Xxnwdh0eB9qZDdkVFG6Mb6nw=
+github.com/dghubble/sling v1.2.0 h1:PYGS9ofwbV9nfhB1kYjB1vtXshMxlp2oQxTMMXVJ5pE=
+github.com/dghubble/sling v1.2.0/go.mod h1:ZcPRuLm0qrcULW2gOrjXrAWgf76sahqSyxXyVOvkunE=
+github.com/google/go-querystring v1.0.0 h1:Xkwi/a1rcvNg1PPYe5vI8GbeBY/jrVuDX5ASuANWTrk=
+github.com/google/go-querystring v1.0.0/go.mod h1:odCYkC5MyYFN7vkCjXpyrEuKhc/BUO6wN/zVPAxq5ck=

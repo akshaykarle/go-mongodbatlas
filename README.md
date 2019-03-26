@@ -4,7 +4,8 @@ A Go client library for the [MongoDB Atlas API](https://docs.atlas.mongodb.com/a
 ## Getting started
 MongoDB Atlas uses the [Digest Access Authentication](https://tools.ietf.org/html/rfc2069) and doesn't support Basic Auth. Follow the examples in [examples](/examples) directory. We create a httpClient using [go-http-digest-auth-client](https://github.com/xinsnake/go-http-digest-auth-client) and pass it over to mongodbatlas. To run a mongo atlas cluster example, just run:
 ```
-go run examples/clusters.go <username> <mongodb-atlas-api-key> <group-id>
+cd ./examples
+go run clusters.go <username> <mongodb-atlas-api-key> <group-id>
 ```
 
 ## Development & Contributing
