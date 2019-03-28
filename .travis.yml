@@ -1,12 +1,12 @@
 language: go
 go:
-  - "1.10.x"
+  - "1.12.x"
   - master
-install:
-  - go get github.com/golang/lint/golint
-  - go get github.com/akshaykarle/go-http-digest-auth-client
-  - go get -v -t ./mongodbatlas
+env:
+  - GO111MODULE=on
+install: true
 script:
+  - GO111MODULE=off go get golang.org/x/lint/golint
   - ./test.sh
 matrix:
   fast_finish: true
