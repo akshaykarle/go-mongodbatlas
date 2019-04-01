@@ -30,6 +30,7 @@ type ReplicationSpec struct {
 	Priority       int `json:"priority"`
 	ElectableNodes int `json:"electableNodes"`
 	ReadOnlyNodes  int `json:"readOnlyNodes"`
+	AnalyticsNodes int `json:"analyticsNodes"`
 }
 
 // ProviderSettings is the configuration for the provisioned servers on which MongoDB runs.
