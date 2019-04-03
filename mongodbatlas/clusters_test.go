@@ -68,6 +68,7 @@ func TestClusterService_Create(t *testing.T) {
 					"priority":       float64(7),
 					"electableNodes": float64(2),
 					"readOnlyNodes":  float64(1),
+					"analyticsNodes": float64(1),
 				},
 			},
 		}
@@ -92,7 +93,8 @@ func TestClusterService_Create(t *testing.T) {
 				"US_EAST_1":{
 					"priority":7,
 					"electableNodes":2,
-					"readOnlyNodes":1
+					"readOnlyNodes":1,
+					"analyticsNodes":1
 				}
 			}
 		}`)
@@ -101,7 +103,7 @@ func TestClusterService_Create(t *testing.T) {
 	client := NewClient(httpClient)
 	providerSettings := ProviderSettings{ProviderName: "AWS", RegionName: "US_EAST_1", InstanceSizeName: "M0"}
 	replicationSpec := map[string]ReplicationSpec{
-		"US_EAST_1": ReplicationSpec{Priority: 7, ElectableNodes: 2, ReadOnlyNodes: 1},
+		"US_EAST_1": ReplicationSpec{Priority: 7, ElectableNodes: 2, ReadOnlyNodes: 1, AnalyticsNodes: 1},
 	}
 	params := &Cluster{
 		Name:                "test",
