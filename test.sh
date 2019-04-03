@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-PKGS=$(go list ./... | grep -v /examples)
+PKGS=$(go list ./... | grep -v /examples | xargs -I % basename % | awk '{print "./"$0"/"}')
 FORMATTABLE="$(ls -d */)"
-LINTABLE=$(go list ./...)
+LINTABLE=$(go list ./... | xargs -I % basename % | awk '{print "./"$0"/"}')
 TESTARGS="-race -coverprofile=profile.out -covermode=atomic"
 ROOT_DIR=$(pwd)/
 COVERAGE_PATH=${ROOT_DIR}/coverage.txt
