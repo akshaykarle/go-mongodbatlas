@@ -39,14 +39,14 @@ func main() {
 		RouteTableCidrBlock: "192.168.0.0/24",
 		ContainerID:         "1112222b3bf99403840e8934",
 	}
-	peer, _, err = client.Peers.Create(gid, params)
+	peer, _, err := client.Peers.Create(gid, params)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("Peers peer created: %v\n", peer)
 
 	// Peers.Update example
-	params = &Peer{RouteTableCidrBlock: "192.168.0.0/24"}
+	params := &Peer{RouteTableCidrBlock: "192.168.0.0/24"}
 	peer, _, err = client.Peers.Update(gid, peer.ID, params)
 	if err != nil {
 		log.Fatal(err)
@@ -54,7 +54,7 @@ func main() {
 	fmt.Printf("Peers peer updated: %v\n", peer)
 
 	// Peers.Delete example
-	_, err = client.Peers.Delete(gid, peer.ID)
+	_, err := client.Peers.Delete(gid, peer.ID)
 	if err != nil {
 		log.Fatal(err)
 	}

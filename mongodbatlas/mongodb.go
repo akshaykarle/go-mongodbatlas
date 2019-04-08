@@ -22,7 +22,7 @@ type Client struct {
 	AlertConfigurations *AlertConfigurationService
 	SnapshotSchedule    *SnapshotScheduleService
 	AtlasUsers          *AtlasUserService
-	PrivateIPMode      *PrivateIPModeService
+	PrivateIPMode       *PrivateIPModeService
 }
 
 // NewClient returns a new Client.

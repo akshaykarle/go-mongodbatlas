@@ -42,9 +42,9 @@ type Container struct {
 	Provisioned    bool   `json:"provisioned,omitempty"`
 }
 
-// PrivateIPMode does needful in terms of the other needful
+// PrivateIPMode is the response from both Enable/DisablePrivateIPMode
 type PrivateIPMode struct {
-	Enabled        bool `json:"enabled,omitempty"`
+	Enabled bool `json:"enabled,omitempty"`
 }
 
 // containerListResponse is the response from the ContainerService.List.
@@ -104,12 +104,12 @@ func (c *ContainerService) Delete(gid string, id string) (*http.Response, error)
 
 // EnablePrivateIPMode enables needfuls
 // https://docs.atlas.mongodb.com/reference/api/set-private-ip-mode-for-project/
-func (p *PrivateIPModeService) EnablePrivateIPMode(gid string) ( *http.Response, error) {
+func (p *PrivateIPModeService) EnablePrivateIPMode(gid string) (*http.Response, error) {
 	privateIPMode := new(PrivateIPMode)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/privateIpMode", gid)
 	params := PrivateIPMode{
-		Enabled: false,
+		Enabled: true,
 	}
 	resp, err := p.sling.New().Patch(path).BodyJSON(params).Receive(privateIPMode, apiError)
 	return resp, relevantError(err, *apiError)
@@ -117,7 +117,7 @@ func (p *PrivateIPModeService) EnablePrivateIPMode(gid string) ( *http.Response,
 
 // DisablePrivateIPMode enables needfuls
 // https://docs.atlas.mongodb.com/reference/api/set-private-ip-mode-for-project/
-func (p *PrivateIPModeService) DisablePrivateIPMode(gid string) ( *http.Response, error) {
+func (p *PrivateIPModeService) DisablePrivateIPMode(gid string) (*http.Response, error) {
 	privateIPMode := new(PrivateIPMode)
 	apiError := new(APIError)
 	path := fmt.Sprintf("%s/privateIpMode", gid)
