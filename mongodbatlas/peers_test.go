@@ -18,7 +18,7 @@ func TestPeerService_List(t *testing.T) {
 	})
 
 	client := NewClient(httpClient)
-	peers, _, err := client.Peers.List("123")
+	peers, _, err := client.Peers.List("123", "AWS")
 	expected := []Peer{
 		Peer{
 			AwsAccountID:        "999900000000",
@@ -89,6 +89,42 @@ func TestPeerService_Create(t *testing.T) {
 		RouteTableCidrBlock: "192.168.0.0/24",
 		ContainerID:         "1112222b3bf99403840e8934",
 		StatusName:          "INITIATING",
+	}
+	assert.Nil(t, err)
+	assert.Equal(t, expected, peer)
+}
+
+func TestPeerService_Create_Gcp(t *testing.T) {
+	httpClient, mux, server := testServer()
+	defer server.Close()
+
+	mux.HandleFunc("/api/atlas/v1.0/groups/123/peers", func(w http.ResponseWriter, r *http.Request) {
+		assertMethod(t, "POST", r)
+		w.Header().Set("Content-Type", "application/json")
+		expectedBody := map[string]interface{}{
+			"gcpProjectId": "gcp-project",
+			"networkName":  "default",
+			"providerName": "GCP",
+			"containerId":  "1112222b3bf99403840e8934",
+		}
+		assertReqJSON(t, expectedBody, r)
+		fmt.Fprintf(w, `{"id":"1112222b3bf99403840e8934","gcpProjectId":"gcp-project","networkName":"default","containerId":"1112222b3bf99403840e8934","status":"ADDING_PEER"}`)
+	})
+
+	client := NewClient(httpClient)
+	params := &Peer{
+		ProviderName: "GCP",
+		NetworkName:  "default",
+		GcpProjectID: "gcp-project",
+		ContainerID:  "1112222b3bf99403840e8934",
+	}
+	peer, _, err := client.Peers.Create("123", params)
+	expected := &Peer{
+		ID:           "1112222b3bf99403840e8934",
+		GcpProjectID: "gcp-project",
+		NetworkName:  "default",
+		ContainerID:  "1112222b3bf99403840e8934",
+		Status:       "ADDING_PEER",
 	}
 	assert.Nil(t, err)
 	assert.Equal(t, expected, peer)
