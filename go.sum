@@ -1,5 +1,5 @@
-github.com/akshaykarle/go-http-digest-auth-client v0.3.1-0.20180104192151-e991a929247d h1:D4o3Jh1/D1Xh4wCYaH/r5k5WxDhsmNemxB+8JJVmjLk=
-github.com/akshaykarle/go-http-digest-auth-client v0.3.1-0.20180104192151-e991a929247d/go.mod h1:z9UGM6ci9s+L2RVvUrtPtv8MfQ0mdrJoDS+7hyKN6fE=
+github.com/akshaykarle/go-http-digest-auth-client v0.3.1 h1:HZb8+Fvxhy2t/4SLGRz2DdU2Z5KqlltlB6COn+K4IyQ=
+github.com/akshaykarle/go-http-digest-auth-client v0.3.1/go.mod h1:z9UGM6ci9s+L2RVvUrtPtv8MfQ0mdrJoDS+7hyKN6fE=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dghubble/sling v1.2.0 h1:PYGS9ofwbV9nfhB1kYjB1vtXshMxlp2oQxTMMXVJ5pE=
