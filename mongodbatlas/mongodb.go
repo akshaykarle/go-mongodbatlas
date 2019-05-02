@@ -22,6 +22,7 @@ type Client struct {
 	AlertConfigurations *AlertConfigurationService
 	SnapshotSchedule    *SnapshotScheduleService
 	AtlasUsers          *AtlasUserService
+	PrivateIPMode       *PrivateIPModeService
 }
 
 // NewClient returns a new Client.
@@ -41,5 +42,6 @@ func NewClient(httpClient *http.Client) *Client {
 		AlertConfigurations: newAlertConfigurationService(base.New()),
 		SnapshotSchedule:    newSnapshotScheduleService(base.New()),
 		AtlasUsers:          newAtlasUserService(base.New()),
+		PrivateIPMode:       newPrivateIPModeService(base.New()),
 	}
 }
