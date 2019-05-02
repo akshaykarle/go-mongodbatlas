@@ -54,6 +54,7 @@ type Cluster struct {
 	MongoURI              string                     `json:"mongoURI,omitempty"`
 	MongoURIUpdated       string                     `json:"mongoURIUpdated,omitempty"`
 	MongoURIWithOptions   string                     `json:"mongoURIWithOptions,omitempty"`
+	SrvAddress            string                     `json:"srvAddress,omitempty"`
 	DiskSizeGB            float64                    `json:"diskSizeGB,omitempty"`
 	BackupEnabled         bool                       `json:"backupEnabled"`
 	ProviderBackupEnabled bool                       `json:"providerBackupEnabled"`
