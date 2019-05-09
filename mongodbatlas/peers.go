@@ -34,6 +34,7 @@ type Peer struct {
 	ErrorStateName      string `json:"errorStateName,omitempty"`
 	ErrorMessage        string `json:"errorMessage,omitempty"`
 	ContainerID         string `json:"containerId,omitempty"`
+	AccepterRegionName  string `json:"accepterRegionName,omitempty"`
 }
 
 // peerListResponse is the response from the PeerService.List.
