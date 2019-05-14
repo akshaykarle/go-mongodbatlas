@@ -78,6 +78,7 @@ func (c *ContainerService) Update(gid string, id string, containerParams *Contai
 }
 
 // Delete a container in the specified group.
+// https://docs.atlas.mongodb.com/reference/api/vpc-delete-one-container/
 func (c *ContainerService) Delete(gid string, id string) (*http.Response, error) {
 	container := new(Container)
 	apiError := new(APIError)
