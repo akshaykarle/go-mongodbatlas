@@ -48,7 +48,7 @@ type databaseUserListResponse struct {
 func (c *DatabaseUserService) List(gid string) ([]DatabaseUser, *http.Response, error) {
 	response := new(databaseUserListResponse)
 	apiError := new(APIError)
-	path := fmt.Sprintf("%s/databaseUsers", gid)
+	path := fmt.Sprintf("%s/databaseUsers?itemsPerPage=500", gid)
 	resp, err := c.sling.New().Get(path).Receive(response, apiError)
 	return response.Results, resp, relevantError(err, *apiError)
 }
