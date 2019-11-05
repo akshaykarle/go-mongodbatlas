@@ -6,7 +6,7 @@ import (
 	"github.com/dghubble/sling"
 )
 
-const apiURL = "https://cloud.mongodb.com/api/atlas/v1.0/"
+const atlasURL = "https://cloud.mongodb.com/api/atlas/v1.0/"
 
 // Client is a MongoDB Atlas client for making MongoDB API requests.
 type Client struct {
@@ -25,8 +25,13 @@ type Client struct {
 	PrivateIPMode       *PrivateIPModeService
 }
 
-// NewClient returns a new Client.
+// NewClient returns a new Client using MongoDB Atlas API Base URL
 func NewClient(httpClient *http.Client) *Client {
+	return NewCustomURLClient(httpClient, atlasURL)
+}
+
+// NewCustomURLClient returns a new Client using provided API Base URL
+func NewCustomURLClient(httpClient *http.Client, apiURL string) *Client {
 	base := sling.New().Client(httpClient).Base(apiURL)
 
 	return &Client{
